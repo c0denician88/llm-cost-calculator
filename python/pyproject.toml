@@ -1,0 +1,23 @@
+[project]
+name = "llm-cost-calculator"
+version = "0.1.0"
+description = "Maintained LLM pricing database + cost calculator for 25+ models across all major providers"
+requires-python = ">=3.9"
+license = "MIT"
+authors = [{ name = "Anoman AI", email = "hello@anoman.io" }]
+keywords = ["llm", "pricing", "cost", "calculator", "openai", "anthropic", "google"]
+dependencies = []
+readme = "../README.md"
+
+[project.urls]
+Homepage = "https://github.com/c0denician88/llm-cost-calculator"
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/llm_cost_calculator"]
