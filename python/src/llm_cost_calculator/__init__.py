@@ -22,4 +22,4 @@ __all__ = [
     "AnomanTier", "list_anoman_tiers", "weighted_tokens", "weighted_tokens_for_model",
     "anoman_token_cost", "estimate_monthly_anoman_cost", "recommend_anoman_tier",
 ]
-__version__ = "0.2.0"
+__version__ = "0.2.1"
