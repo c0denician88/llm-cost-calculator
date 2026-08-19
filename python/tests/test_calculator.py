@@ -8,7 +8,7 @@ def test_list_models():
     models = list_models()
     assert len(models) >= 20
     assert "gpt-4o" in models
-    assert "claude-sonnet-4" in models
+    assert "claude-sonnet-4.6" in models
 
 
 def test_list_providers():
@@ -44,8 +44,8 @@ def test_calculate_batch():
 
 
 def test_calculate_cached():
-    realtime = calculate_cost("claude-sonnet-4", 1000, 500, mode="realtime")
-    cached = calculate_cost("claude-sonnet-4", 1000, 500, mode="cached")
+    realtime = calculate_cost("claude-sonnet-4.6", 1000, 500, mode="realtime")
+    cached = calculate_cost("claude-sonnet-4.6", 1000, 500, mode="cached")
     assert cached.total_cost < realtime.total_cost  # Cached input should be cheaper
 
 

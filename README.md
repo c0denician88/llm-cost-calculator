@@ -4,7 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Tests](https://github.com/c0denician88/llm-cost-calculator/actions/workflows/ci.yml/badge.svg)](https://github.com/c0denician88/llm-cost-calculator/actions)
 
-**Maintained LLM pricing database + cost calculator.** 22+ models across 7 providers, plus the **Anoman AI gateway cost model** (0% markup pass-through + flat-fee tiers). Calculate, compare, and estimate costs for any LLM workload. Zero dependencies. Python (TypeScript coming soon).
+**Maintained LLM pricing database + cost calculator.** 29 current, trending models across 8 providers, plus the **Anoman AI gateway cost model** (0% markup pass-through + flat-fee tiers). Calculate, compare, and estimate costs for any LLM workload. Zero dependencies. Python (TypeScript coming soon).
 
 ---
 
@@ -13,7 +13,7 @@
 LLM pricing changes constantly. There's no maintained, machine-readable pricing database. Developers guess costs or build their own spreadsheets.
 
 This library gives you:
-- **`data/pricing.json`** — machine-readable database of 22+ model prices (input, output, batch, cached)
+- **`data/pricing.json`** — machine-readable database of 29 current model prices (input, output, batch, cached)
 - **`calculate_cost()`** — exact cost for a model + token count
 - **`compare_costs()`** — all models sorted by cost for your workload
 - **`find_cheapest()`** — cheapest model matching your criteria
@@ -48,34 +48,41 @@ pip install llm-cost-calculator
 
 ## Pricing Database
 
-22+ models with real-time, batch, and cached pricing (USD per 1M tokens):
+The trending flagship models people actually ship with — real-time, batch, and cached pricing (USD per 1M tokens):
 
 | Model | Provider | Input | Output | Batch In | Batch Out | Context |
 |-------|----------|------:|-------:|---------:|----------:|--------:|
-| Claude Opus 4 | Anthropic | $15.00 | $75.00 | $7.50 | $37.50 | 200K |
-| Claude Sonnet 4 | Anthropic | $3.00 | $15.00 | $1.50 | $7.50 | 200K |
-| Claude Haiku 3.5 | Anthropic | $0.80 | $4.00 | $0.40 | $2.00 | 200K |
-| GPT-4o | OpenAI | $2.50 | $10.00 | $1.25 | $5.00 | 128K |
-| GPT-4o Mini | OpenAI | $0.15 | $0.60 | $0.075 | $0.30 | 128K |
-| GPT-4.1 | OpenAI | $2.00 | $8.00 | $1.00 | $4.00 | 1M |
-| GPT-4.1 Mini | OpenAI | $0.40 | $1.60 | $0.20 | $0.80 | 1M |
-| GPT-4.1 Nano | OpenAI | $0.10 | $0.40 | $0.05 | $0.20 | 1M |
-| o3 | OpenAI | $10.00 | $40.00 | — | — | 200K |
-| o3 Mini | OpenAI | $1.10 | $4.40 | — | — | 200K |
-| o4 Mini | OpenAI | $1.10 | $4.40 | — | — | 200K |
-| Gemini 2.5 Pro | Google | $1.25 | $10.00 | $0.625 | $5.00 | 1M |
-| Gemini 2.5 Flash | Google | $0.15 | $0.60 | $0.075 | $0.30 | 1M |
-| Gemini 2.0 Flash | Google | $0.10 | $0.40 | $0.05 | $0.20 | 1M |
-| Mistral Large | Mistral | $2.00 | $6.00 | $1.00 | $3.00 | 128K |
-| Mistral Small | Mistral | $0.10 | $0.30 | $0.05 | $0.15 | 128K |
-| Codestral | Mistral | $0.30 | $0.90 | — | — | 256K |
-| DeepSeek V3 | DeepSeek | $0.27 | $1.10 | — | — | 128K |
-| DeepSeek R1 | DeepSeek | $0.55 | $2.19 | — | — | 128K |
-| Llama 4 Scout | Together | $0.15 | $0.60 | — | — | 512K |
-| Llama 4 Maverick | Together | $0.30 | $1.20 | — | — | 1M |
-| Llama 3.3 70B | Groq | $0.59 | $0.79 | — | — | 128K |
+| Claude Opus 4.8 | Anthropic | $5 | $25 | $2.5 | $12.5 | 1M |
+| Claude Sonnet 5 | Anthropic | $2 | $10 | $1 | $5 | 1M |
+| Claude Sonnet 4.6 | Anthropic | $3 | $15 | $1.5 | $7.5 | 1M |
+| Claude Haiku 4.5 | Anthropic | $1 | $5 | $0.5 | $2.5 | 200K |
+| GPT-5.5 | OpenAI | $5 | $30 | $2.5 | $15 | 1.05M |
+| GPT-5.4 | OpenAI | $2.5 | $15 | $1.25 | $7.5 | 1.05M |
+| GPT-5.4 Mini | OpenAI | $0.75 | $4.5 | $0.375 | $2.25 | 272K |
+| GPT-4o | OpenAI | $2.5 | $10 | $1.25 | $5 | 128K |
+| GPT-4o Mini | OpenAI | $0.15 | $0.6 | $0.075 | $0.3 | 128K |
+| GPT-4.1 | OpenAI | $2 | $8 | $1 | $4 | 1.05M |
+| GPT-4.1 Mini | OpenAI | $0.4 | $1.6 | $0.2 | $0.8 | 1.05M |
+| o3 | OpenAI | $2 | $8 | $1 | $4 | 200K |
+| o4-mini | OpenAI | $1.1 | $4.4 | $0.55 | $2.2 | 200K |
+| Gemini 3.6 Flash | Google | $1.5 | $7.5 | $0.75 | $3.75 | 1.05M |
+| Gemini 3.5 Flash-Lite | Google | $0.3 | $2.5 | $0.15 | $1.25 | 1.05M |
+| DeepSeek V3 | DeepSeek | $0.28 | $0.42 | — | — | 131K |
+| DeepSeek R1 | DeepSeek | $0.28 | $0.42 | — | — | 131K |
+| DeepSeek V4 Pro | DeepSeek | $0.66 | $1.98 | $0.33 | $0.99 | 1.05M |
+| DeepSeek V4 Flash | DeepSeek | $0.14 | $0.28 | $0.07 | $0.14 | 1.31M |
+| Llama 4 Maverick | Meta | $0.2 | $0.8 | $0.1 | $0.4 | 1.05M |
+| Llama 4 Scout | Meta | $0.1 | $0.3 | $0.05 | $0.15 | 1.31M |
+| Qwen3 Max | Alibaba | $0.78 | $3.9 | $0.39 | $1.95 | 262K |
+| Qwen3 Coder | Alibaba | $0.3 | $1 | $0.15 | $0.5 | 262K |
+| Qwen3 235B | Alibaba | $0.09 | $0.55 | $0.045 | $0.275 | 262K |
+| GLM-5 | Z.ai | $0.95 | $2.55 | — | — | 205K |
+| GLM-4.6 | Z.ai | $0.5 | $2 | $0.25 | $1 | 205K |
+| Mistral Large | Mistral | $0.5 | $1.5 | $0.25 | $0.75 | 262K |
+| Mistral Small | Mistral | $0.06 | $0.18 | $0.03 | $0.09 | 131K |
+| Codestral | Mistral | $0.3 | $0.9 | $0.15 | $0.45 | 256K |
 
-*Pricing last verified: April 2026. Submit a PR if you find stale data.*
+*Verified from the [Anoman AI](https://anoman.io) live catalog (0% pass-through), August 2026. Batch = 50% of realtime where supported; cached-input uses documented per-provider discounts. Submit a PR if you find stale data.*
 
 ---
 
@@ -132,9 +139,9 @@ Tier data lives in [`data/anoman_tiers.json`](data/anoman_tiers.json).
 ### `calculate_cost(model, input_tokens, output_tokens, mode="realtime")`
 
 ```python
-cost = calculate_cost("claude-sonnet-4", 10000, 5000, mode="batch")
+cost = calculate_cost("claude-sonnet-4.6", 10000, 5000, mode="batch")
 print(cost)
-# CostEstimate(model='claude-sonnet-4', provider='anthropic', input_cost=0.015, output_cost=0.0375, total_cost=0.0525, mode='batch')
+# CostEstimate(model='claude-sonnet-4.6', provider='anthropic', input_cost=0.015, output_cost=0.0375, total_cost=0.0525, mode='batch')
 ```
 
 **Modes:** `"realtime"` (default), `"batch"` (50% off for supported models), `"cached"` (cached input pricing).
@@ -178,7 +185,7 @@ print(f"Estimated monthly: ${monthly:.2f}")
 from llm_cost_calculator import calculate_cost
 
 # Same prompt across 5 providers
-models = ["gpt-4o", "claude-sonnet-4", "gemini-2.5-pro", "mistral-large", "deepseek-v3"]
+models = ["gpt-4o", "claude-sonnet-4.6", "gemini-3.6-flash", "mistral-large", "deepseek-v3"]
 for model in models:
     cost = calculate_cost(model, input_tokens=50000, output_tokens=10000)
     print(f"  {cost.model:25s}  ${cost.total_cost:.4f}")
