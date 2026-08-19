@@ -1,0 +1,62 @@
+{
+  "version": "2026-08-19",
+  "currency": "USD",
+  "pricing_model": "0% markup pass-through on tokens + a flat monthly platform fee",
+  "note": "Token costs through Anoman equal the provider prices in pricing.json — Anoman adds 0% markup on tokens. The flat platform fee below is what you pay on top for the guarded gateway: prompt-injection + PII guardrails on every call, observability, batch routing, IDR (Rupiah) billing with no international card, and in-region (Jakarta) processing for UU PDP data residency. OpenRouter-style aggregators add 5-20% token markup instead.",
+  "homepage": "https://anoman.io",
+  "weighted_token_multipliers": {
+    "_comment": "Anoman meters usage in WEIGHTED tokens: weighted = raw * provider_multiplier * model_class_multiplier * routing_mode_multiplier. A tier's monthly allowance is expressed in weighted tokens.",
+    "provider_type": { "cloud_direct": 1.0, "bedrock": 0.5, "self_hosted": 0.5, "local_id": 0.3 },
+    "model_class": { "budget": 1, "mid": 4, "premium": 17, "ultra": 42 },
+    "routing_mode": { "realtime": 1.0, "provider_cache": 0.9, "batch": 0.5, "cache_hit": 0.0 }
+  },
+  "tiers": [
+    {
+      "id": "starter",
+      "name": "Starter",
+      "platform_fee_usd_month": 12,
+      "idr_equivalent": "Rp 192K",
+      "included_weighted_tokens": 500000,
+      "overage": "hard cap — no overage",
+      "overage_per_1m_weighted_usd": null,
+      "model_access": ["budget"]
+    },
+    {
+      "id": "pro",
+      "name": "Pro",
+      "platform_fee_usd_month": 39,
+      "idr_equivalent": "Rp 624K",
+      "included_weighted_tokens": 20000000,
+      "overage": "$1.20 per 1M weighted tokens",
+      "overage_per_1m_weighted_usd": 1.20,
+      "model_access": ["budget", "mid", "premium"]
+    },
+    {
+      "id": "payg",
+      "name": "Pay-As-You-Go",
+      "platform_fee_usd_month": 9,
+      "idr_equivalent": "Rp 144K + raw",
+      "included_weighted_tokens": null,
+      "overage": "raw provider cost + 0-5% volume markup (still 2-5x cheaper than OpenRouter)",
+      "overage_per_1m_weighted_usd": null,
+      "model_access": ["budget", "mid", "premium", "ultra"]
+    },
+    {
+      "id": "enterprise",
+      "name": "Enterprise",
+      "platform_fee_usd_month": 499,
+      "idr_equivalent": "Rp 7.98M+",
+      "included_weighted_tokens": null,
+      "overage": "negotiated / custom",
+      "overage_per_1m_weighted_usd": null,
+      "model_access": ["budget", "mid", "premium", "ultra"]
+    }
+  ],
+  "payg_markup_tiers": [
+    { "up_to_monthly_calls": 1000, "markup_pct": 0 },
+    { "up_to_monthly_calls": 5000, "markup_pct": 1 },
+    { "up_to_monthly_calls": 20000, "markup_pct": 2 },
+    { "up_to_monthly_calls": 50000, "markup_pct": 3 },
+    { "up_to_monthly_calls": null, "markup_pct": 5 }
+  ]
+}

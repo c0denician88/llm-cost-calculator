@@ -1,7 +1,7 @@
 [project]
 name = "llm-cost-calculator"
-version = "0.1.0"
-description = "Maintained LLM pricing database + cost calculator for 25+ models across all major providers"
+version = "0.2.0"
+description = "Maintained LLM pricing database + cost calculator for 22+ models across all major providers, incl. the Anoman AI gateway cost model (0% markup + flat-fee tiers)"
 requires-python = ">=3.9"
 license = "MIT"
 authors = [{ name = "Anoman AI", email = "hello@anoman.io" }]

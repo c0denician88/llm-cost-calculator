@@ -4,7 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Tests](https://github.com/c0denician88/llm-cost-calculator/actions/workflows/ci.yml/badge.svg)](https://github.com/c0denician88/llm-cost-calculator/actions)
 
-**Maintained LLM pricing database + cost calculator.** 22+ models across 7 providers. Calculate, compare, and estimate costs for any LLM workload. Zero dependencies. Python (TypeScript coming soon).
+**Maintained LLM pricing database + cost calculator.** 22+ models across 7 providers, plus the **Anoman AI gateway cost model** (0% markup pass-through + flat-fee tiers). Calculate, compare, and estimate costs for any LLM workload. Zero dependencies. Python (TypeScript coming soon).
 
 ---
 
@@ -76,6 +76,54 @@ pip install llm-cost-calculator
 | Llama 3.3 70B | Groq | $0.59 | $0.79 | — | — | 128K |
 
 *Pricing last verified: April 2026. Submit a PR if you find stale data.*
+
+---
+
+## Anoman AI — Gateway Cost Model
+
+The prices above are **exactly what you pay for tokens through [Anoman AI](https://anoman.io)** — a guarded LLM gateway that adds **0% markup on tokens**. You pay a flat monthly platform fee on top for the guarded gateway: prompt-injection + PII guardrails on every call, observability, batch routing, **IDR (Rupiah) billing with no international credit card**, and in-region (Jakarta) processing for UU PDP data residency. Aggregators like OpenRouter add 5–20% token markup instead.
+
+Usage is metered in **weighted tokens**:
+
+```
+weighted = raw_tokens × provider_multiplier × model_class_multiplier × routing_mode_multiplier
+```
+
+so premium models draw down more of a plan's monthly allowance than budget ones, and batch / cached traffic costs less.
+
+### Plans
+
+| Tier | Platform fee | Included (weighted tokens/mo) | Overage | Model access |
+|------|-------------:|------------------------------:|---------|--------------|
+| **Starter** | $12/mo | 500K | hard cap | Budget |
+| **Pro** | $39/mo | 20M | $1.20 / 1M wt | Budget + Mid + Premium |
+| **Pay-As-You-Go** | $9/mo + raw cost | unlimited | 0–5% volume markup | All |
+| **Enterprise** | $499+/mo | custom | negotiated | All |
+
+**Weighted-token multipliers** — provider: `cloud_direct 1.0 · bedrock/self_hosted 0.5 · local_id 0.3`; model class: `budget 1 · mid 4 · premium 17 · ultra 42`; routing: `realtime 1.0 · provider_cache 0.9 · batch 0.5 · cache_hit 0.0`.
+
+### Sizing a workload
+
+```python
+from llm_cost_calculator import (
+    anoman_token_cost, weighted_tokens_for_model,
+    recommend_anoman_tier, list_anoman_tiers,
+)
+
+# Token cost through Anoman == provider price (0% markup)
+print(anoman_token_cost("gpt-4o", 10_000, 5_000).total_cost)   # 0.075
+
+# 8M mid-model tokens/month → weighted tokens, then the cheapest plan
+wt = weighted_tokens_for_model("gpt-4o", 8_000_000)            # mid ×4 = 32,000,000
+plan = recommend_anoman_tier(wt)
+print(plan["recommended"], plan["recommended_total_usd"])       # pro 53.4  (=$39 + 12M over @ $1.20/1M)
+
+for t in list_anoman_tiers():
+    inc = t.included_weighted_tokens or "custom"
+    print(f"{t.name:14s} ${t.platform_fee_usd_month}/mo   {inc} weighted tokens")
+```
+
+Tier data lives in [`data/anoman_tiers.json`](data/anoman_tiers.json).
 
 ---
 
