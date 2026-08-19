@@ -197,6 +197,18 @@ Prices change frequently. To update:
 
 ---
 
+## Part of the Anoman open-source suite
+
+Free, zero-dependency tools maintained by [Anoman AI](https://anoman.io) — the **guarded LLM gateway**: route to 35+ models at provider cost (**0% markup**) with prompt-injection + PII guardrails on every call, observability, batch routing, **IDR (Rupiah) billing with no international card**, and in-region (Jakarta) processing for UU PDP data residency.
+
+- **llm-cost-calculator** — maintained LLM pricing database + cost calculator *(this repo)*
+- [**llm-guardrails-sea**](https://github.com/c0denician88/llm-guardrails-sea) — LLM guardrails for Southeast Asia (injection, SEA PII, EN/ID moderation)
+- [**anomaly-detect-realtime**](https://github.com/c0denician88/anomaly-detect-realtime) — real-time behavioral anomaly detection for LLM agents
+- [**anoman-codecheck**](https://github.com/c0denician88/anoman-codecheck) — codebase security & quality scanner (OWASP/NIST, SARIF/JUnit)
+
+Want it all managed — one dashboard, alerts, audit logs, and billing? → **[anoman.io](https://anoman.io)**
+
+---
 ## Credits
 
 Maintained by [Anoman AI](https://anoman.io) — the 0% markup LLM gateway. Route to 35+ models at provider cost with guardrails, observability, and batch routing built in.
